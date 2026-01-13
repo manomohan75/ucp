@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Commerce Protocol | React Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const iconBase = {
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 2,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round'
+    };
+
+    const ShoppingCart = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <circle cx="9" cy="21" r="1" />
+        <circle cx="20" cy="21" r="1" />
+        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+      </svg>
+    );
+
+    const Store = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <path d="M4 8l2-4h12l2 4" />
+        <path d="M3 8h18v13H3z" />
+        <path d="M9 12h6v9H9z" />
+        <path d="M3 8h18" />
+      </svg>
+    );
+
+    const CreditCard = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+        <line x1="6" y1="16" x2="10" y2="16" />
+      </svg>
+    );
+
+    const Shield = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    );
+
+    const ArrowRight = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <line x1="5" y1="12" x2="19" y2="12" />
+        <polyline points="12 5 19 12 12 19" />
+      </svg>
+    );
+
+    const CheckCircle = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    );
+
+    const Users = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <circle cx="9" cy="7" r="4" />
+        <path d="M2 21c0-4 3-7 7-7s7 3 7 7" />
+        <circle cx="18" cy="7" r="3" />
+        <path d="M18 14c2.7 1 4 3.4 4 7" />
+      </svg>
+    );
+
+    const Network = (props) => (
+      <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+        <circle cx="12" cy="5" r="3" />
+        <circle cx="5" cy="19" r="3" />
+        <circle cx="19" cy="19" r="3" />
+        <path d="M10.5 7.5L7 16" />
+        <path d="M13.5 7.5L17 16" />
+        <path d="M8 19h8" />
+      </svg>
+    );
+
+    const UCPTutorial = () => {
+      const [activeTab, setActiveTab] = useState('overview');
+
+      const tabs = [
+        { id: 'overview', label: 'Overview', icon: Network },
+        { id: 'architecture', label: 'Architecture', icon: Network },
+        { id: 'merchant', label: 'Merchant Setup', icon: Store },
+        { id: 'customer', label: 'Customer Flow', icon: Users },
+        { id: 'payment', label: 'Payment Process', icon: CreditCard },
+        { id: 'examples', label: 'Examples', icon: CheckCircle }
+      ];
+
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <ShoppingCart className="w-12 h-12" />
+                  <h1 className="text-4xl font-bold">Universal Commerce Protocol</h1>
+                </div>
+                <p className="text-blue-100 text-lg">A standardized protocol for seamless e-commerce transactions</p>
+                <div className="mt-4 pt-4 border-t border-blue-400">
+                  <p className="text-blue-50 text-sm">Author: <span className="font-semibold text-white">Mohan Manoharan</span></p>
+                </div>
+              </div>
+
+              {/* Navigation */}
+              <div className="border-b border-gray-200 bg-gray-50">
+                <div className="flex overflow-x-auto">
+                  {tabs.map(tab => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors whitespace-nowrap ${
+                          activeTab === tab.id
+                            ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                        {tab.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-8">
+                {activeTab === 'overview' && <OverviewContent />}
+                {activeTab === 'architecture' && <ArchitectureContent />}
+                {activeTab === 'merchant' && <MerchantContent />}
+                {activeTab === 'customer' && <CustomerContent />}
+                {activeTab === 'payment' && <PaymentContent />}
+                {activeTab === 'examples' && <ExamplesContent />}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const OverviewContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">What is Universal Commerce Protocol?</h2>
+        
+        <p className="text-gray-700 text-lg leading-relaxed">
+          Universal Commerce Protocol (UCP) is a standardized framework that enables seamless, 
+          interoperable commerce transactions across different platforms, payment systems, and 
+          geographic boundaries. It provides a unified interface for merchants, customers, and 
+          payment processors to interact efficiently.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-6 mt-8">
+          <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+            <Shield className="w-10 h-10 text-blue-600 mb-3" />
+            <h3 className="font-bold text-lg mb-2">Secure</h3>
+            <p className="text-gray-600">End-to-end encryption and authentication for all transactions</p>
+          </div>
+          
+          <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
+            <Network className="w-10 h-10 text-green-600 mb-3" />
+            <h3 className="font-bold text-lg mb-2">Interoperable</h3>
+            <p className="text-gray-600">Works across different platforms and payment systems</p>
+          </div>
+          
+          <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-600">
+            <CheckCircle className="w-10 h-10 text-purple-600 mb-3" />
+            <h3 className="font-bold text-lg mb-2">Standardized</h3>
+            <p className="text-gray-600">Common protocols reduce integration complexity</p>
+          </div>
+        </div>
+
+        <div className="bg-gray-50 p-6 rounded-lg mt-8">
+          <h3 className="font-bold text-xl mb-4">Key Features</h3>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <span className="text-gray-700"><strong>Universal Product Catalog:</strong> Standardized product information format</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <span className="text-gray-700"><strong>Multi-Currency Support:</strong> Automatic currency conversion and pricing</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <span className="text-gray-700"><strong>Real-time Inventory:</strong> Synchronized stock levels across platforms</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <span className="text-gray-700"><strong>Unified Checkout:</strong> Consistent payment experience everywhere</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+
+    const ArchitectureContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">UCP Architecture</h2>
+        
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-8">
+          <svg viewBox="0 0 800 600" className="w-full">
+            {/* Customer Layer */}
+            <rect x="50" y="50" width="150" height="80" fill="#3b82f6" rx="8" />
+            <text x="125" y="90" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Customer</text>
+            <text x="125" y="110" textAnchor="middle" fill="white" fontSize="12">Browser/App</text>
+            
+            {/* Arrow down */}
+            <path d="M 125 130 L 125 170" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            
+            {/* UCP Gateway */}
+            <rect x="50" y="170" width="700" height="100" fill="#8b5cf6" rx="8" />
+            <text x="400" y="210" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">UCP Gateway Layer</text>
+            <text x="400" y="235" textAnchor="middle" fill="white" fontSize="14">Authentication | Routing | Protocol Translation</text>
+            
+            {/* Arrows down to services */}
+            <path d="M 150 270 L 150 310" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            <path d="M 400 270 L 400 310" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            <path d="M 650 270 L 650 310" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            
+            {/* Service Layer */}
+            <rect x="50" y="310" width="180" height="100" fill="#10b981" rx="8" />
+            <text x="140" y="345" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Merchant Service</text>
+            <text x="140" y="365" textAnchor="middle" fill="white" fontSize="11">Product Catalog</text>
+            <text x="140" y="380" textAnchor="middle" fill="white" fontSize="11">Inventory</text>
+            <text x="140" y="395" textAnchor="middle" fill="white" fontSize="11">Orders</text>
+            
+            <rect x="310" y="310" width="180" height="100" fill="#f59e0b" rx="8" />
+            <text x="400" y="345" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Payment Service</text>
+            <text x="400" y="365" textAnchor="middle" fill="white" fontSize="11">Processing</text>
+            <text x="400" y="380" textAnchor="middle" fill="white" fontSize="11">Validation</text>
+            <text x="400" y="395" textAnchor="middle" fill="white" fontSize="11">Settlement</text>
+            
+            <rect x="570" y="310" width="180" height="100" fill="#ef4444" rx="8" />
+            <text x="660" y="345" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Fulfillment Service</text>
+            <text x="660" y="365" textAnchor="middle" fill="white" fontSize="11">Shipping</text>
+            <text x="660" y="380" textAnchor="middle" fill="white" fontSize="11">Tracking</text>
+            <text x="660" y="395" textAnchor="middle" fill="white" fontSize="11">Returns</text>
+            
+            {/* Arrows to data layer */}
+            <path d="M 140 410 L 140 450" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            <path d="M 400 410 L 400 450" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            <path d="M 660 410 L 660 450" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            
+            {/* Data Layer */}
+            <rect x="50" y="450" width="700" height="80" fill="#6366f1" rx="8" />
+            <text x="400" y="485" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Data Layer</text>
+            <text x="400" y="510" textAnchor="middle" fill="white" fontSize="13">Distributed Database | Cache | Message Queue</text>
+            
+            {/* Arrow marker definition */}
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#374151" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div className="bg-indigo-50 p-6 rounded-lg">
+          <h3 className="font-bold text-xl mb-4">Layer Responsibilities</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-semibold text-blue-700">Customer Layer</h4>
+              <p className="text-gray-700">Handles user interface, session management, and initiates transactions</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-purple-700">UCP Gateway</h4>
+              <p className="text-gray-700">Routes requests, manages authentication, translates protocols, and enforces security</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-green-700">Service Layer</h4>
+              <p className="text-gray-700">Implements business logic for merchants, payments, and fulfillment</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-indigo-700">Data Layer</h4>
+              <p className="text-gray-700">Stores and manages all transactional and catalog data</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const MerchantContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Merchant Requirements & Setup</h2>
+        
+        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg">
+          <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
+            <Store className="w-6 h-6 text-blue-600" />
+            What Merchants Need
+          </h3>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white border-2 border-gray-200 p-6 rounded-lg">
+            <h4 className="font-bold text-lg mb-4 text-gray-800">1. Technical Requirements</h4>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>API Credentials:</strong> OAuth 2.0 client ID and secret</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>SSL Certificate:</strong> HTTPS endpoint for webhooks</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Product Feed:</strong> JSON/XML catalog in UCP format</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Webhook Endpoint:</strong> For order notifications</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white border-2 border-gray-200 p-6 rounded-lg">
+            <h4 className="font-bold text-lg mb-4 text-gray-800">2. Business Requirements</h4>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Business License:</strong> Valid registration number</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Tax Information:</strong> VAT/GST numbers where applicable</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Bank Account:</strong> For settlement of funds</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Return Policy:</strong> Clear terms and conditions</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Sample Product Catalog (UCP Format)</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`{
+  "merchant_id": "merchant_12345",
+  "catalog_version": "2.0",
+  "products": [
+    {
+      "id": "prod_001",
+      "sku": "SHIRT-BLU-M",
+      "name": "Classic Blue Cotton Shirt",
+      "description": "100% cotton, breathable fabric",
+      "category": "clothing/mens/shirts",
+      "price": {
+        "amount": 29.99,
+        "currency": "USD"
+      },
+      "inventory": {
+        "quantity": 150,
+        "warehouse": "US-EAST-1"
+      },
+      "images": [
+        "https://cdn.example.com/shirt-front.jpg",
+        "https://cdn.example.com/shirt-back.jpg"
+      ],
+      "variants": [
+        {"size": "S", "quantity": 30},
+        {"size": "M", "quantity": 50},
+        {"size": "L", "quantity": 40},
+        {"size": "XL", "quantity": 30}
+      ]
+    }
+  ]
+}`}
+          </pre>
+        </div>
+
+        <div className="bg-green-50 p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Integration Steps</h4>
+          <div className="space-y-4">
+            <div className="flex items-start gap-4">
+              <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+              <div>
+                <h5 className="font-semibold">Register & Get Credentials</h5>
+                <p className="text-gray-700">Sign up on the UCP portal and obtain API keys</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+              <div>
+                <h5 className="font-semibold">Configure Product Feed</h5>
+                <p className="text-gray-700">Upload your catalog in UCP JSON/XML format</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+              <div>
+                <h5 className="font-semibold">Set Up Webhooks</h5>
+                <p className="text-gray-700">Configure endpoints for order notifications</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
+              <div>
+                <h5 className="font-semibold">Test in Sandbox</h5>
+                <p className="text-gray-700">Validate integration with test transactions</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">5</div>
+              <div>
+                <h5 className="font-semibold">Go Live</h5>
+                <p className="text-gray-700">Switch to production credentials and start selling</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const CustomerContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Customer Experience Flow</h2>
+        
+        <div className="bg-purple-50 border-l-4 border-purple-600 p-6 rounded-r-lg">
+          <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
+            <Users className="w-6 h-6 text-purple-600" />
+            What Customers Need
+          </h3>
+          <p className="text-gray-700">Minimal requirements for a seamless shopping experience</p>
+        </div>
+
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
+          <h4 className="font-bold text-lg mb-4">Customer Requirements</h4>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <Users className="w-10 h-10 text-blue-600 mx-auto mb-2" />
+              <h5 className="font-semibold mb-1">Account (Optional)</h5>
+              <p className="text-sm text-gray-600">Guest checkout available</p>
+            </div>
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <CreditCard className="w-10 h-10 text-green-600 mx-auto mb-2" />
+              <h5 className="font-semibold mb-1">Payment Method</h5>
+              <p className="text-sm text-gray-600">Card, wallet, or bank</p>
+            </div>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <Store className="w-10 h-10 text-orange-600 mx-auto mb-2" />
+              <h5 className="font-semibold mb-1">Shipping Address</h5>
+              <p className="text-sm text-gray-600">For physical products</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-8">
+          <h4 className="font-bold text-xl mb-6 text-center">Purchase Flow Diagram</h4>
+          <svg viewBox="0 0 600 500" className="w-full">
+            {/* Browse */}
+            <rect x="200" y="20" width="200" height="60" fill="#3b82f6" rx="8" />
+            <text x="300" y="55" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Browse Products</text>
+            
+            <path d="M 300 80 L 300 110" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead2)" />
+            
+            {/* Add to Cart */}
+            <rect x="200" y="110" width="200" height="60" fill="#10b981" rx="8" />
+            <text x="300" y="145" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Add to Cart</text>
+            
+            <path d="M 300 170 L 300 200" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead2)" />
+            
+            {/* Checkout */}
+            <rect x="200" y="200" width="200" height="60" fill="#f59e0b" rx="8" />
+            <text x="300" y="235" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Checkout</text>
+            
+            <path d="M 300 260 L 300 290" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead2)" />
+            
+            {/* Payment */}
+            <rect x="200" y="290" width="200" height="60" fill="#8b5cf6" rx="8" />
+            <text x="300" y="325" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Payment</text>
+            
+            <path d="M 300 350 L 300 380" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead2)" />
+            
+            {/* Confirmation */}
+            <rect x="200" y="380" width="200" height="60" fill="#ef4444" rx="8" />
+            <text x="300" y="415" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Order Confirmation</text>
+            
+            {/* Side notes */}
+            <text x="50" y="55" fill="#374151" fontSize="13">Search &amp; Filter</text>
+            <text x="50" y="145" fill="#374151" fontSize="13">Quantity &amp; Variants</text>
+            <text x="50" y="235" fill="#374151" fontSize="13">Shipping Info</text>
+            <text x="50" y="325" fill="#374151" fontSize="13">Secure Processing</text>
+            <text x="50" y="415" fill="#374151" fontSize="13">Email &amp; Tracking</text>
+            
+            <defs>
+              <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#374151" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div className="bg-indigo-50 p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Enhanced Features for Customers</h4>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-white p-4 rounded-lg">
+              <h5 className="font-semibold mb-2">🔍 Universal Search</h5>
+              <p className="text-sm text-gray-700">Search across all participating merchants simultaneously</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h5 className="font-semibold mb-2">💳 Saved Payment Methods</h5>
+              <p className="text-sm text-gray-700">Use the same payment info across all stores</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h5 className="font-semibold mb-2">📦 Unified Tracking</h5>
+              <p className="text-sm text-gray-700">Track all orders from one dashboard</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <h5 className="font-semibold mb-2">🔄 Easy Returns</h5>
+              <p className="text-sm text-gray-700">Standardized return process across merchants</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const PaymentContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Payment Processing</h2>
+        
+        <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-r-lg">
+          <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
+            <CreditCard className="w-6 h-6 text-green-600" />
+            Payment Requirements &amp; Flow
+          </h3>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white border-2 border-gray-200 p-6 rounded-lg">
+            <h4 className="font-bold text-lg mb-4">Payment Provider Requirements</h4>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>PCI DSS Compliance:</strong> Level 1 certification required</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>API Integration:</strong> RESTful API with OAuth 2.0</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>3D Secure Support:</strong> For fraud prevention</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Webhook Notifications:</strong> Real-time status updates</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <span><strong>Multi-Currency:</strong> Support for 150+ currencies</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white border-2 border-gray-200 p-6 rounded-lg">
+            <h4 className="font-bold text-lg mb-4">Supported Payment Methods</h4>
+            <div className="space-y-3">
+              <div className="bg-blue-50 p-3 rounded">
+                <h5 className="font-semibold text-blue-900">Credit/Debit Cards</h5>
+                <p className="text-sm text-gray-700">Visa, Mastercard, Amex, Discover</p>
+              </div>
+              <div className="bg-purple-50 p-3 rounded">
+                <h5 className="font-semibold text-purple-900">Digital Wallets</h5>
+                <p className="text-sm text-gray-700">PayPal, Apple Pay, Google Pay</p>
+              </div>
+              <div className="bg-green-50 p-3 rounded">
+                <h5 className="font-semibold text-green-900">Bank Transfers</h5>
+                <p className="text-sm text-gray-700">ACH, SEPA, Wire Transfer</p>
+              </div>
+              <div className="bg-orange-50 p-3 rounded">
+                <h5 className="font-semibold text-orange-900">Buy Now Pay Later</h5>
+                <p className="text-sm text-gray-700">Klarna, Affirm, Afterpay</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-8">
+          <h4 className="font-bold text-xl mb-6 text-center">Payment Transaction Flow</h4>
+          <svg viewBox="0 0 800 400" className="w-full">
+            {/* Customer */}
+            <rect x="50" y="50" width="120" height="60" fill="#3b82f6" rx="6" />
+            <text x="110" y="85" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Customer</text>
+            
+            {/* Arrow 1 */}
+            <path d="M 170 80 L 230 80" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead3)" />
+            <text x="200" y="70" textAnchor="middle" fill="#374151" fontSize="11">Payment Info</text>
+            
+            {/* UCP Gateway */}
+            <rect x="230" y="50" width="140" height="60" fill="#8b5cf6" rx="6" />
+            <text x="300" y="85" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">UCP Gateway</text>
+            
+            {/* Arrow 2 */}
+            <path d="M 370 80 L 430 80" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead3)" />
+            <text x="400" y="70" textAnchor="middle" fill="#374151" fontSize="11">Tokenized</text>
+            
+            {/* Payment Processor */}
+            <rect x="430" y="50" width="140" height="60" fill="#10b981" rx="6" />
+            <text x="500" y="85" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Payment Processor</text>
+            
+            {/* Arrow 3 */}
+            <path d="M 570 80 L 630 80" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead3)" />
+            <text x="600" y="70" textAnchor="middle" fill="#374151" fontSize="11">Authorize</text>
+            
+            {/* Bank */}
+            <rect x="630" y="50" width="120" height="60" fill="#f59e0b" rx="6" />
+            <text x="690" y="85" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Bank</text>
+            
+            {/* Return arrows */}
+            <path d="M 630 130 L 570 130" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrowhead4)" />
+            <text x="600" y="150" textAnchor="middle" fill="#10b981" fontSize="11">Approved</text>
+            
+            <path d="M 430 130 L 370 130" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrowhead4)" />
+            <text x="400" y="150" textAnchor="middle" fill="#10b981" fontSize="11">Success</text>
+            
+            <path d="M 230 130 L 170 130" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrowhead4)" />
+            <text x="200" y="150" textAnchor="middle" fill="#10b981" fontSize="11">Confirmation</text>
+            
+            {/* Merchant notification */}
+            <rect x="350" y="200" width="120" height="60" fill="#ef4444" rx="6" />
+            <text x="410" y="235" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">Merchant</text>
+            
+            <path d="M 300 110 L 380 200" stroke="#374151" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowhead3)" />
+            <text x="320" y="170" fill="#374151" fontSize="11">Webhook</text>
+            
+            <defs>
+              <marker id="arrowhead3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#374151" />
+              </marker>
+              <marker id="arrowhead4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+              </marker>
+            </defs>
+            
+            {/* Timeline labels */}
+            <text x="50" y="310" fill="#6b7280" fontSize="12" fontWeight="bold">Security Measures:</text>
+            <text x="50" y="330" fill="#6b7280" fontSize="11">• End-to-end encryption (TLS 1.3)</text>
+            <text x="50" y="348" fill="#6b7280" fontSize="11">• PCI DSS tokenization</text>
+            <text x="50" y="366" fill="#6b7280" fontSize="11">• Fraud detection (ML-based)</text>
+            <text x="50" y="384" fill="#6b7280" fontSize="11">• 3D Secure authentication</text>
+            
+            <text x="450" y="310" fill="#6b7280" fontSize="12" fontWeight="bold">Processing Time:</text>
+            <text x="450" y="330" fill="#6b7280" fontSize="11">• Authorization: 2-5 seconds</text>
+            <text x="450" y="348" fill="#6b7280" fontSize="11">• Settlement: 1-3 business days</text>
+            <text x="450" y="366" fill="#6b7280" fontSize="11">• Refund: 5-10 business days</text>
+          </svg>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Sample Payment Request</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`POST /api/v1/payments
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "transaction_id": "txn_abc123xyz",
+  "amount": {
+    "value": 129.99,
+    "currency": "USD"
+  },
+  "payment_method": {
+    "type": "card",
+    "token": "tok_card_secure_token_here"
+  },
+  "customer": {
+    "id": "cust_456789",
+    "email": "customer@example.com"
+  },
+  "merchant": {
+    "id": "merchant_12345",
+    "descriptor": "YourStore.com"
+  },
+  "metadata": {
+    "order_id": "ORD-2024-001",
+    "ip_address": "192.168.1.1"
+  },
+  "three_d_secure": {
+    "required": true,
+    "return_url": "https://yourstore.com/payment/callback"
+  }
+}`}
+          </pre>
+        </div>
+
+        <div className="bg-red-50 p-6 rounded-lg border-2 border-red-200">
+          <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
+            <Shield className="w-6 h-6 text-red-600" />
+            Security Best Practices
+          </h4>
+          <div className="grid md:grid-cols-2 gap-4">
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Never store raw card details</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Use tokenization for all payments</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Enable 3D Secure for high-risk transactions</span>
+              </li>
+            </ul>
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Implement rate limiting on payment APIs</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Monitor for suspicious activity patterns</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Log all payment events for audit trails</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+
+    const ExamplesContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Real-World Examples</h2>
+        
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border-2 border-blue-200">
+          <h3 className="font-bold text-xl mb-4">Example 1: Multi-Store Fashion Purchase</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700">
+              <strong>Scenario:</strong> Sarah wants to buy a complete outfit from three different stores
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mt-4">
+              <div className="bg-blue-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store A - Shirt</h4>
+                <p className="text-sm text-gray-700">$45.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from NY</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store B - Jeans</h4>
+                <p className="text-sm text-gray-700">$78.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from CA</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store C - Shoes</h4>
+                <p className="text-sm text-gray-700">$95.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from TX</p>
+              </div>
+            </div>
+            <div className="bg-green-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-green-900">UCP Benefit:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Single checkout for all three items</li>
+                <li>✓ One payment authorization for $218.00</li>
+                <li>✓ Unified tracking dashboard</li>
+                <li>✓ Consolidated shipping notifications</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-200">
+          <h3 className="font-bold text-xl mb-4">Example 2: International B2B Transaction</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700">
+              <strong>Scenario:</strong> TechCorp in USA purchases equipment from suppliers in Germany and Japan
+            </p>
+            <div className="space-y-3 mt-4">
+              <div className="bg-gray-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">German Supplier - Machinery Parts</h4>
+                <p className="text-sm text-gray-700">€15,000 (≈ $16,200 USD)</p>
+                <p className="text-xs text-gray-600 mt-1">Payment: 30-day net terms</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Japanese Supplier - Electronics</h4>
+                <p className="text-sm text-gray-700">¥2,500,000 (≈ $17,000 USD)</p>
+                <p className="text-xs text-gray-600 mt-1">Payment: Letter of Credit</p>
+              </div>
+            </div>
+            <div className="bg-blue-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-blue-900">UCP Handles:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Automatic currency conversion at competitive rates</li>
+                <li>✓ Different payment terms per supplier</li>
+                <li>✓ Customs documentation generation</li>
+                <li>✓ Multi-currency invoicing and reconciliation</li>
+                <li>✓ International shipping coordination</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-2 border-purple-200">
+          <h3 className="font-bold text-xl mb-4">Example 3: Subscription Service Bundle</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700">
+              <strong>Scenario:</strong> Customer wants to bundle subscriptions from multiple services
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="bg-purple-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Streaming Service</h4>
+                <p className="text-sm text-gray-700">$14.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">Annual billing available</p>
+              </div>
+              <div className="bg-pink-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Cloud Storage</h4>
+                <p className="text-sm text-gray-700">$9.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">2TB storage</p>
+              </div>
+              <div className="bg-blue-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">News Platform</h4>
+                <p className="text-sm text-gray-700">$12.00/month</p>
+                <p className="text-xs text-gray-600 mt-1">Digital access</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Fitness App</h4>
+                <p className="text-sm text-gray-700">$19.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">Premium tier</p>
+              </div>
+            </div>
+            <div className="bg-purple-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-purple-900">UCP Features:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Single recurring payment for all subscriptions</li>
+                <li>✓ Unified subscription management dashboard</li>
+                <li>✓ Automatic payment method updates across all services</li>
+                <li>✓ Bundled billing at $56.97/month</li>
+                <li>✓ One-click cancellation management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Code Example: Complete Transaction</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`// Initialize UCP Client
+const ucpClient = new UCPClient({
+  apiKey: process.env.UCP_API_KEY,
+  environment: 'production'
+});
+
+// Create a multi-merchant order
+const order = await ucpClient.orders.create({
+  customer: {
+    id: 'cust_123',
+    email: 'sarah@example.com'
+  },
+  items: [
+    {
+      merchant_id: 'store_a',
+      product_id: 'prod_shirt_001',
+      quantity: 1,
+      price: 45.00
+    },
+    {
+      merchant_id: 'store_b',
+      product_id: 'prod_jeans_042',
+      quantity: 1,
+      price: 78.00
+    },
+    {
+      merchant_id: 'store_c',
+      product_id: 'prod_shoes_215',
+      quantity: 1,
+      price: 95.00
+    }
+  ],
+  shipping: {
+    address: {
+      street: '123 Main St',
+      city: 'New York',
+      state: 'NY',
+      zip: '10001',
+      country: 'US'
+    },
+    method: 'standard'
+  },
+  payment: {
+    method_token: 'pm_card_visa_1234'
+  }
+});
+
+// Process payment
+const payment = await ucpClient.payments.process({
+  order_id: order.id,
+  amount: 218.00,
+  currency: 'USD'
+});
+
+// Get order status
+const status = await ucpClient.orders.getStatus(order.id);
+console.log(status);
+// {
+//   order_id: 'ord_789',
+//   status: 'confirmed',
+//   payments: { status: 'completed' },
+//   shipments: [
+//     { merchant: 'store_a', tracking: 'USPS123', status: 'in_transit' },
+//     { merchant: 'store_b', tracking: 'UPS456', status: 'processing' },
+//     { merchant: 'store_c', tracking: 'FDX789', status: 'label_created' }
+//   ]
+// }`}
+          </pre>
+        </div>
+
+        <div className="bg-yellow-50 p-6 rounded-lg border-2 border-yellow-300">
+          <h4 className="font-bold text-lg mb-3">Key Takeaways</h4>
+          <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Unified Experience:</strong> One checkout, one payment, multiple merchants</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Global Ready:</strong> Multi-currency, multi-region, multi-payment method support</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Flexible:</strong> Works for B2C, B2B, subscriptions, and marketplace models</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Developer Friendly:</strong> Simple APIs, comprehensive documentation, sandbox environment</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<UCPTutorial />);
+  </script>
+</body>
+</html>
