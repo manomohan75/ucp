@@ -97,7 +97,9 @@
         { id: 'merchant', label: 'Merchant Setup', icon: Store },
         { id: 'customer', label: 'Customer Flow', icon: Users },
         { id: 'payment', label: 'Payment Process', icon: CreditCard },
-        { id: 'examples', label: 'Examples', icon: CheckCircle }
+        { id: 'examples', label: 'Examples', icon: CheckCircle },
+        { id: 'usecases', label: 'Use Cases', icon: ArrowRight },
+        { id: 'developer', label: 'Developer Guide', icon: Shield }
       ];
 
       return (
@@ -147,6 +149,8 @@
                 {activeTab === 'customer' && <CustomerContent />}
                 {activeTab === 'payment' && <PaymentContent />}
                 {activeTab === 'examples' && <ExamplesContent />}
+                {activeTab === 'usecases' && <UseCasesContent />}
+                {activeTab === 'developer' && <DeveloperGuideContent />}
               </div>
             </div>
           </div>
@@ -205,6 +209,336 @@
               <span className="text-gray-700"><strong>Unified Checkout:</strong> Consistent payment experience everywhere</span>
             </li>
           </ul>
+        </div>
+      </div>
+    );
+
+    const UseCasesContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Use Cases</h2>
+
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border-2 border-blue-200">
+          <h3 className="font-bold text-xl mb-4">Multi-Store Fashion Purchase</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700"><strong>Scenario:</strong> Sarah wants to buy a complete outfit from three different stores</p>
+            <div className="grid md:grid-cols-3 gap-4 mt-4">
+              <div className="bg-blue-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store A - Shirt</h4>
+                <p className="text-sm text-gray-700">$45.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from NY</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store B - Jeans</h4>
+                <p className="text-sm text-gray-700">$78.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from CA</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Store C - Shoes</h4>
+                <p className="text-sm text-gray-700">$95.00</p>
+                <p className="text-xs text-gray-600 mt-1">Ships from TX</p>
+              </div>
+            </div>
+            <div className="bg-green-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-green-900">UCP Benefit:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Single checkout for all three items</li>
+                <li>✓ One payment authorization for $218.00</li>
+                <li>✓ Unified tracking dashboard</li>
+                <li>✓ Consolidated shipping notifications</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-200">
+          <h3 className="font-bold text-xl mb-4">International B2B Transaction</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700"><strong>Scenario:</strong> TechCorp in USA purchases equipment from suppliers in Germany and Japan</p>
+            <div className="space-y-3 mt-4">
+              <div className="bg-gray-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">German Supplier - Machinery Parts</h4>
+                <p className="text-sm text-gray-700">€15,000 (≈ $16,200 USD)</p>
+                <p className="text-xs text-gray-600 mt-1">Payment: 30-day net terms</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Japanese Supplier - Electronics</h4>
+                <p className="text-sm text-gray-700">¥2,500,000 (≈ $17,000 USD)</p>
+                <p className="text-xs text-gray-600 mt-1">Payment: Letter of Credit</p>
+              </div>
+            </div>
+            <div className="bg-blue-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-blue-900">UCP Handles:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Automatic currency conversion at competitive rates</li>
+                <li>✓ Different payment terms per supplier</li>
+                <li>✓ Customs documentation generation</li>
+                <li>✓ Multi-currency invoicing and reconciliation</li>
+                <li>✓ International shipping coordination</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-2 border-purple-200">
+          <h3 className="font-bold text-xl mb-4">Subscription Service Bundle</h3>
+          <div className="bg-white p-4 rounded-lg space-y-3">
+            <p className="text-gray-700"><strong>Scenario:</strong> Customer wants to bundle subscriptions from multiple services</p>
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="bg-purple-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Streaming Service</h4>
+                <p className="text-sm text-gray-700">$14.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">Annual billing available</p>
+              </div>
+              <div className="bg-pink-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Cloud Storage</h4>
+                <p className="text-sm text-gray-700">$9.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">2TB storage</p>
+              </div>
+              <div className="bg-blue-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">News Platform</h4>
+                <p className="text-sm text-gray-700">$12.00/month</p>
+                <p className="text-xs text-gray-600 mt-1">Digital access</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h4 className="font-semibold mb-2">Fitness App</h4>
+                <p className="text-sm text-gray-700">$19.99/month</p>
+                <p className="text-xs text-gray-600 mt-1">Premium tier</p>
+              </div>
+            </div>
+            <div className="bg-purple-100 p-4 rounded-lg mt-4">
+              <p className="font-semibold text-purple-900">UCP Features:</p>
+              <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                <li>✓ Single recurring payment for all subscriptions</li>
+                <li>✓ Unified subscription management dashboard</li>
+                <li>✓ Automatic payment method updates across all services</li>
+                <li>✓ Bundled billing at $56.97/month</li>
+                <li>✓ One-click cancellation management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-yellow-50 p-6 rounded-lg border-2 border-yellow-300">
+          <h4 className="font-bold text-lg mb-3">Key Takeaways</h4>
+          <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Unified Experience:</strong> One checkout, one payment, multiple merchants</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Global Ready:</strong> Multi-currency, multi-region, multi-payment method support</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Flexible:</strong> Works for B2C, B2B, subscriptions, and marketplace models</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <span><strong>Developer Friendly:</strong> Simple APIs, comprehensive documentation, sandbox environment</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+
+    const DeveloperGuideContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Developer Guide</h2>
+
+        <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
+          <h3 className="font-bold text-xl mb-3 flex items-center gap-2">
+            <ArrowRight className="w-6 h-6 text-green-600" />
+            Integration Steps
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6 mt-4">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h5 className="font-semibold">Register &amp; Get Credentials</h5>
+                  <p className="text-gray-700">Sign up on the UCP portal and obtain API keys</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h5 className="font-semibold">Configure Product Feed</h5>
+                  <p className="text-gray-700">Upload your catalog in UCP JSON/XML format</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div>
+                  <h5 className="font-semibold">Set Up Webhooks</h5>
+                  <p className="text-gray-700">Configure endpoints for order notifications</p>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                <div>
+                  <h5 className="font-semibold">Test in Sandbox</h5>
+                  <p className="text-gray-700">Validate integration with test transactions</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">5</div>
+                <div>
+                  <h5 className="font-semibold">Go Live</h5>
+                  <p className="text-gray-700">Switch to production credentials and start selling</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Sample Product Catalog (UCP Format)</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`{
+  "merchant_id": "merchant_12345",
+  "catalog_version": "2.0",
+  "products": [
+    {
+      "id": "prod_001",
+      "sku": "SHIRT-BLU-M",
+      "name": "Classic Blue Cotton Shirt",
+      "description": "100% cotton, breathable fabric",
+      "category": "clothing/mens/shirts",
+      "price": {
+        "amount": 29.99,
+        "currency": "USD"
+      },
+      "inventory": {
+        "quantity": 150,
+        "warehouse": "US-EAST-1"
+      },
+      "images": [
+        "https://cdn.example.com/shirt-front.jpg",
+        "https://cdn.example.com/shirt-back.jpg"
+      ],
+      "variants": [
+        {"size": "S", "quantity": 30},
+        {"size": "M", "quantity": 50},
+        {"size": "L", "quantity": 40},
+        {"size": "XL", "quantity": 30}
+      ]
+    }
+  ]
+}`}
+          </pre>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Sample Payment Request</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`POST /api/v1/payments
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "transaction_id": "txn_abc123xyz",
+  "amount": {
+    "value": 129.99,
+    "currency": "USD"
+  },
+  "payment_method": {
+    "type": "card",
+    "token": "tok_card_secure_token_here"
+  },
+  "customer": {
+    "id": "cust_456789",
+    "email": "customer@example.com"
+  },
+  "merchant": {
+    "id": "merchant_12345",
+    "descriptor": "YourStore.com"
+  },
+  "metadata": {
+    "order_id": "ORD-2024-001",
+    "ip_address": "192.168.1.1"
+  },
+  "three_d_secure": {
+    "required": true,
+    "return_url": "https://yourstore.com/payment/callback"
+  }
+}`}
+          </pre>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-4">Code Example: Complete Transaction</h4>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`// Initialize UCP Client
+const ucpClient = new UCPClient({
+  apiKey: process.env.UCP_API_KEY,
+  environment: 'production'
+});
+
+// Create a multi-merchant order
+const order = await ucpClient.orders.create({
+  customer: {
+    id: 'cust_123',
+    email: 'sarah@example.com'
+  },
+  items: [
+    {
+      merchant_id: 'store_a',
+      product_id: 'prod_shirt_001',
+      quantity: 1,
+      price: 45.00
+    },
+    {
+      merchant_id: 'store_b',
+      product_id: 'prod_jeans_042',
+      quantity: 1,
+      price: 78.00
+    },
+    {
+      merchant_id: 'store_c',
+      product_id: 'prod_shoes_215',
+      quantity: 1,
+      price: 95.00
+    }
+  ],
+  shipping: {
+    address: {
+      street: '123 Main St',
+      city: 'New York',
+      state: 'NY',
+      zip: '10001',
+      country: 'US'
+    },
+    method: 'standard'
+  },
+  payment: {
+    method_token: 'pm_card_visa_1234'
+  }
+});
+
+// Process payment
+const payment = await ucpClient.payments.process({
+  order_id: order.id,
+  amount: 218.00,
+  currency: 'USD'
+});
+
+// Get order status
+const status = await ucpClient.orders.getStatus(order.id);
+console.log(status);
+// {
+//   order_id: 'ord_789',
+//   status: 'confirmed',
+//   payments: { status: 'completed' },
+//   shipments: [
+//     { merchant: 'store_a', tracking: 'USPS123', status: 'in_transit' },
+//     { merchant: 'store_b', tracking: 'UPS456', status: 'processing' },
+//     { merchant: 'store_c', tracking: 'FDX789', status: 'label_created' }
+//   ]
+// }`}
+          </pre>
         </div>
       </div>
     );

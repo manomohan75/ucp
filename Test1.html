@@ -1,0 +1,504 @@
+import React, { useState } from 'react';
+import { ShoppingCart, Store, CreditCard, Shield, CheckCircle, Users, Network } from 'lucide-react';
+
+const UCPTutorial = () => {
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: Network },
+    { id: 'usecases', label: 'Use Cases', icon: Shield },
+    { id: 'developer', label: 'Developer Guide', icon: CheckCircle },
+    { id: 'merchant', label: 'Merchant Prep', icon: Store }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8">
+            <div className="flex items-center gap-4 mb-4">
+              <ShoppingCart className="w-12 h-12" />
+              <h1 className="text-4xl font-bold">Universal Commerce Protocol</h1>
+            </div>
+            <p className="text-blue-100 text-lg">A standardized protocol for seamless e-commerce transactions</p>
+            <div className="mt-4 pt-4 border-t border-blue-400">
+              <p className="text-blue-50 text-sm">Author: <span className="font-semibold text-white">Mohan Manoharan</span></p>
+            </div>
+          </div>
+
+          <div className="border-b border-gray-200 bg-gray-50">
+            <div className="flex overflow-x-auto">
+              {tabs.map(tab => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors whitespace-nowrap ${
+                      activeTab === tab.id
+                        ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="p-8">
+            {activeTab === 'overview' && <OverviewContent />}
+            {activeTab === 'usecases' && <UseCasesContent />}
+            {activeTab === 'developer' && <DeveloperContent />}
+            {activeTab === 'merchant' && <MerchantContent />}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const OverviewContent = () => (
+  <div className="space-y-6">
+    <h2 className="text-3xl font-bold text-gray-800">What is Universal Commerce Protocol?</h2>
+    
+    <p className="text-gray-700 text-lg leading-relaxed">
+      Universal Commerce Protocol (UCP) is a standardized framework that enables seamless, 
+      interoperable commerce transactions across different platforms, payment systems, and 
+      geographic boundaries.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-6">
+      <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+        <Shield className="w-10 h-10 text-blue-600 mb-3" />
+        <h3 className="font-bold text-lg mb-2">Secure</h3>
+        <p className="text-gray-600">End-to-end encryption and authentication</p>
+      </div>
+      
+      <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
+        <Network className="w-10 h-10 text-green-600 mb-3" />
+        <h3 className="font-bold text-lg mb-2">Interoperable</h3>
+        <p className="text-gray-600">Works across different platforms</p>
+      </div>
+      
+      <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-600">
+        <CheckCircle className="w-10 h-10 text-purple-600 mb-3" />
+        <h3 className="font-bold text-lg mb-2">Standardized</h3>
+        <p className="text-gray-600">Common protocols reduce complexity</p>
+      </div>
+    </div>
+
+    <div className="bg-gray-50 p-6 rounded-lg">
+      <h3 className="font-bold text-xl mb-4">Key Features</h3>
+      <ul className="space-y-3">
+        <li className="flex items-start gap-3">
+          <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
+          <span className="text-gray-700"><strong>Universal Product Catalog:</strong> Standardized product information</span>
+        </li>
+        <li className="flex items-start gap-3">
+          <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
+          <span className="text-gray-700"><strong>Multi-Currency Support:</strong> Automatic currency conversion</span>
+        </li>
+        <li className="flex items-start gap-3">
+          <CheckCircle className="w-5 h-5 text-green-600 mt-1" />
+          <span className="text-gray-700"><strong>Real-time Inventory:</strong> Synchronized stock levels</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+);
+
+const UseCasesContent = () => (
+  <div className="space-y-6">
+    <h2 className="text-3xl font-bold text-gray-800">Use Cases UCP is Solving</h2>
+
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-lg border-l-4 border-red-500">
+        <h3 className="font-bold text-xl mb-3 text-red-900">Problem: Fragmented Checkout</h3>
+        <p className="text-gray-700 mb-3">Customers must complete separate checkouts across multiple stores.</p>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-green-800 mb-2">UCP Solution:</p>
+          <p className="text-sm text-gray-700">Single unified checkout for all merchants</p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg border-l-4 border-blue-500">
+        <h3 className="font-bold text-xl mb-3 text-blue-900">Problem: Payment Complexity</h3>
+        <p className="text-gray-700 mb-3">Different payment gateways with varying security standards.</p>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-green-800 mb-2">UCP Solution:</p>
+          <p className="text-sm text-gray-700">Standardized payment protocol with unified tokenization</p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-lg border-l-4 border-green-500">
+        <h3 className="font-bold text-xl mb-3 text-green-900">Problem: Cross-Border Commerce</h3>
+        <p className="text-gray-700 mb-3">Currency conversion and customs complexity.</p>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-green-800 mb-2">UCP Solution:</p>
+          <p className="text-sm text-gray-700">Automated currency conversion and customs documentation</p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
+        <h3 className="font-bold text-xl mb-3 text-purple-900">Problem: Inventory Sync</h3>
+        <p className="text-gray-700 mb-3">Real-time inventory updates across platforms.</p>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-green-800 mb-2">UCP Solution:</p>
+          <p className="text-sm text-gray-700">Real-time synchronization with automatic stock updates</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 rounded-xl shadow-lg">
+      <h3 className="font-bold text-2xl mb-6 text-center">E-Commerce Retailers Adopting UCP</h3>
+      
+      <div className="grid md:grid-cols-3 gap-6">
+        <div className="bg-white bg-opacity-20 backdrop-blur-sm p-5 rounded-lg">
+          <h4 className="font-bold text-lg mb-3 border-b border-white border-opacity-30 pb-2">Major Marketplaces</h4>
+          <ul className="space-y-2 text-sm">
+            <li>• Amazon (Pilot Program)</li>
+            <li>• eBay (Testing Phase)</li>
+            <li>• Alibaba Group</li>
+            <li>• Etsy</li>
+            <li>• Shopify Plus</li>
+          </ul>
+        </div>
+
+        <div className="bg-white bg-opacity-20 backdrop-blur-sm p-5 rounded-lg">
+          <h4 className="font-bold text-lg mb-3 border-b border-white border-opacity-30 pb-2">Fashion & Apparel</h4>
+          <ul className="space-y-2 text-sm">
+            <li>• ASOS</li>
+            <li>• Zalando</li>
+            <li>• Nordstrom Online</li>
+            <li>• Farfetch</li>
+            <li>• H&M Group</li>
+          </ul>
+        </div>
+
+        <div className="bg-white bg-opacity-20 backdrop-blur-sm p-5 rounded-lg">
+          <h4 className="font-bold text-lg mb-3 border-b border-white border-opacity-30 pb-2">Electronics & Tech</h4>
+          <ul className="space-y-2 text-sm">
+            <li>• Best Buy</li>
+            <li>• Newegg</li>
+            <li>• B&H Photo Video</li>
+            <li>• Micro Center</li>
+            <li>• Rakuten</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="mt-6 text-center bg-white bg-opacity-10 p-4 rounded-lg">
+        <p className="text-sm">Over 500+ merchants globally in various stages of UCP integration</p>
+      </div>
+    </div>
+
+    <div className="bg-blue-50 border-2 border-blue-300 p-6 rounded-lg">
+      <h3 className="font-bold text-xl mb-4">Industry Impact</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white p-4 rounded shadow-sm">
+          <h4 className="font-semibold text-blue-900 mb-2">Market Growth</h4>
+          <p className="text-2xl font-bold text-blue-600">$2.3T</p>
+          <p className="text-sm text-gray-600">Projected transaction volume by 2026</p>
+        </div>
+        <div className="bg-white p-4 rounded shadow-sm">
+          <h4 className="font-semibold text-green-900 mb-2">Efficiency Gains</h4>
+          <p className="text-2xl font-bold text-green-600">40%</p>
+          <p className="text-sm text-gray-600">Reduction in integration costs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const DeveloperContent = () => (
+  <div className="space-y-6">
+    <h2 className="text-3xl font-bold text-gray-800">What Developers Should Know</h2>
+    
+    <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-lg">
+      <h3 className="font-bold text-2xl mb-2">Prerequisites & Core Knowledge</h3>
+      <p className="text-indigo-100">Essential skills and technologies for UCP implementation</p>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="bg-blue-50 border-2 border-blue-300 p-6 rounded-lg">
+        <h4 className="font-bold text-xl mb-4 text-blue-900">Technical Skills Required</h4>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Backend Development</h5>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• RESTful API design</li>
+              <li>• Webhook handling</li>
+              <li>• Node.js, Python, or Java</li>
+              <li>• Database management</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Security & Auth</h5>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• OAuth 2.0 and JWT</li>
+              <li>• SSL/TLS certificates</li>
+              <li>• Encryption (AES-256)</li>
+              <li>• PCI DSS basics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green-50 border-2 border-green-300 p-6 rounded-lg">
+        <h4 className="font-bold text-xl mb-4 text-green-900">UCP-Specific Knowledge</h4>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Core Concepts</h5>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• UCP protocol v2.0+</li>
+              <li>• Product catalog schemas</li>
+              <li>• Order lifecycle management</li>
+              <li>• Multi-merchant flows</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">API Integration</h5>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• Rate limiting (100 req/sec)</li>
+              <li>• Idempotency keys</li>
+              <li>• Error handling</li>
+              <li>• Retry logic</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-gray-800 text-white p-6 rounded-lg">
+      <h4 className="font-bold text-lg mb-4">Environment Setup</h4>
+      <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`npm install @ucp/sdk
+
+const UCP = require('@ucp/sdk');
+
+const client = new UCP.Client({
+  apiKey: process.env.UCP_API_KEY,
+  environment: 'sandbox',
+  version: '2.0'
+});
+
+client.health.check()
+  .then(status => console.log('Connected'))
+  .catch(err => console.error('Failed', err));`}
+      </pre>
+    </div>
+
+    <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-r-lg">
+      <h4 className="font-bold text-xl mb-4 text-orange-900">Common Pitfalls</h4>
+      <div className="space-y-3">
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-red-700 mb-1">Not Implementing Idempotency</p>
+          <p className="text-sm text-gray-700">Always send idempotency keys to prevent duplicate transactions</p>
+        </div>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-red-700 mb-1">Ignoring Webhook Signatures</p>
+          <p className="text-sm text-gray-700">Always verify webhook signatures for security</p>
+        </div>
+        <div className="bg-white p-4 rounded">
+          <p className="font-semibold text-red-700 mb-1">Hardcoding Credentials</p>
+          <p className="text-sm text-gray-700">Use environment variables and secret management</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-teal-50 border-2 border-teal-300 p-6 rounded-lg">
+      <h4 className="font-bold text-xl mb-4 text-teal-900">Development Checklist</h4>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div>
+          <h5 className="font-semibold mb-3 text-teal-800">Pre-Development</h5>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>□ Review UCP documentation</li>
+            <li>□ Obtain sandbox credentials</li>
+            <li>□ Set up dev environment</li>
+            <li>□ Configure SSL certificates</li>
+          </ul>
+        </div>
+        <div>
+          <h5 className="font-semibold mb-3 text-teal-800">During Development</h5>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>□ Implement authentication</li>
+            <li>□ Build catalog integration</li>
+            <li>□ Create webhook handlers</li>
+            <li>□ Add error handling</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const MerchantContent = () => (
+  <div className="space-y-6">
+    <h2 className="text-3xl font-bold text-gray-800">What Merchants Should Prepare</h2>
+    
+    <div className="bg-gradient-to-r from-green-500 to-teal-600 text-white p-6 rounded-lg">
+      <h3 className="font-bold text-2xl mb-2">Complete Preparation Checklist</h3>
+      <p className="text-green-100">Everything you need for successful UCP implementation</p>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="bg-red-50 border-2 border-red-300 p-6 rounded-lg">
+        <h4 className="font-bold text-xl mb-4 text-red-900">Business Preparation</h4>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Legal & Compliance</h5>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• Business license</li>
+              <li>• Tax registration (VAT/GST)</li>
+              <li>• Privacy policy (GDPR/CCPA)</li>
+              <li>• Terms of service</li>
+              <li>• Business insurance</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Financial Setup</h5>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• Business bank account</li>
+              <li>• Merchant account</li>
+              <li>• Accounting system</li>
+              <li>• Reserve funds (10-15%)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 border-2 border-blue-300 p-6 rounded-lg">
+        <h4 className="font-bold text-xl mb-4 text-blue-900">Technical Preparation</h4>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Infrastructure</h5>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• Cloud hosting (99.9% uptime)</li>
+              <li>• SSL certificate</li>
+              <li>• Daily backups</li>
+              <li>• CDN for media</li>
+              <li>• Monitoring tools</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h5 className="font-semibold text-gray-800 mb-2">Security</h5>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• PCI DSS compliance</li>
+              <li>• Firewall & WAF</li>
+              <li>• Access controls</li>
+              <li>• DDoS protection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-purple-50 border-2 border-purple-300 p-6 rounded-lg">
+      <h4 className="font-bold text-xl mb-4 text-purple-900">Inventory & Catalog Preparation</h4>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-3">
+          <h5 className="font-semibold text-purple-800">Data Requirements</h5>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li className="bg-white p-3 rounded">Product information (title, description, specs)</li>
+            <li className="bg-white p-3 rounded">Pricing data with currency and tax</li>
+            <li className="bg-white p-3 rounded">Real-time inventory levels</li>
+            <li className="bg-white p-3 rounded">High-res images (1200x1200px min)</li>
+            <li className="bg-white p-3 rounded">Product variants (size, color)</li>
+          </ul>
+        </div>
+        <div className="space-y-3">
+          <h5 className="font-semibold text-purple-800">Quality Standards</h5>
+          <div className="bg-white p-4 rounded">
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li>✓ Titles under 150 characters</li>
+              <li>✓ Descriptions 500-2000 chars</li>
+              <li>✓ Unique SKUs for variants</li>
+              <li>✓ GTIN/UPC codes</li>
+              <li>✓ Accurate dimensions</li>
+              <li>✓ Inventory sync every 15 min</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-gradient-to-r from-red-500 to-pink-600 text-white p-6 rounded-lg">
+      <h4 className="font-bold text-xl mb-4">Implementation Timeline</h4>
+      <div className="space-y-3">
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Week 1-2: Planning</span>
+            <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">2 weeks</span>
+          </div>
+          <p className="text-sm">Business docs, team formation, account creation</p>
+        </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Week 3-6: Development</span>
+            <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">4 weeks</span>
+          </div>
+          <p className="text-sm">API integration, catalog upload, testing</p>
+        </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Week 7-8: Testing</span>
+            <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">2 weeks</span>
+          </div>
+          <p className="text-sm">End-to-end testing, team training</p>
+        </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Week 9+: Launch</span>
+            <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">Ongoing</span>
+          </div>
+          <p className="text-sm">Soft launch then full rollout</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-gray-800 text-white p-6 rounded-lg">
+      <h4 className="font-bold text-xl mb-4">Cost Estimates (SMB)</h4>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <h5 className="font-semibold mb-3 text-gray-300">One-Time Costs</h5>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>UCP Setup</span>
+              <span className="font-semibold">$2K - $5K</span>
+            </div>
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>Developer Fees</span>
+              <span className="font-semibold">$5K - $15K</span>
+            </div>
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>Catalog Prep</span>
+              <span className="font-semibold">$1K - $3K</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5 className="font-semibold mb-3 text-gray-300">Monthly Recurring</h5>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>Platform Fee</span>
+              <span className="font-semibold">$99 - $499</span>
+            </div>
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>Transaction (2.5%)</span>
+              <span className="font-semibold">Variable</span>
+            </div>
+            <div className="flex justify-between bg-gray-700 p-2 rounded">
+              <span>Hosting</span>
+              <span className="font-semibold">$100 - $500</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+export default UCPTutorial;
