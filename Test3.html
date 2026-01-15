@@ -1,0 +1,335 @@
+import React, { useState } from 'react';
+import { Network, Bot, ShoppingCart, ChevronDown, ChevronUp } from 'lucide-react';
+
+const CommerceComparison = () => {
+  const [expandedRows, setExpandedRows] = useState({});
+
+  const toggleRow = (id) => {
+    setExpandedRows(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const comparisonData = [
+    {
+      id: 1,
+      category: "Definition",
+      api: "Application Programming Interface - Set of protocols for building software applications",
+      mcp: "Model Context Protocol - Standardized way for AI systems to connect to external data sources and tools",
+      ucp: "Universal Commerce Protocol - Standardized framework for interoperable commerce transactions",
+      agenticImpact: "Foundation layer that determines how autonomous agents interact with commerce systems"
+    },
+    {
+      id: 2,
+      category: "Primary Purpose",
+      api: "Enable software-to-software communication and data exchange",
+      mcp: "Provide AI models with contextual access to real-time data and tools",
+      ucp: "Standardize end-to-end commerce workflows across platforms",
+      agenticImpact: "MCP enables agents to access data, UCP enables them to execute transactions"
+    },
+    {
+      id: 3,
+      category: "Architecture Type",
+      api: "Request-Response / Client-Server",
+      mcp: "Bidirectional context-aware protocol with persistent connections",
+      ucp: "Event-driven distributed commerce mesh",
+      agenticImpact: "MCP's persistent connections allow agents to maintain context across shopping sessions"
+    },
+    {
+      id: 4,
+      category: "Agent Autonomy Level",
+      api: "Low - Agents must explicitly call endpoints with exact parameters",
+      mcp: "Medium-High - Agents can discover and use tools dynamically with contextual awareness",
+      ucp: "High - Agents can orchestrate multi-merchant transactions autonomously",
+      agenticImpact: "Higher autonomy = agents can make more complex purchasing decisions independently"
+    },
+    {
+      id: 5,
+      category: "Discovery Mechanism",
+      api: "Static documentation / OpenAPI specs",
+      mcp: "Dynamic tool discovery with semantic descriptions",
+      ucp: "Standardized catalog with semantic product metadata",
+      agenticImpact: "Dynamic discovery lets agents find new products and services without reprogramming"
+    },
+    {
+      id: 6,
+      category: "Context Handling",
+      api: "Stateless (typically) - Each request independent",
+      mcp: "Stateful - Maintains conversation and user context",
+      ucp: "Session-based with cross-merchant cart persistence",
+      agenticImpact: "Context preservation enables agents to remember user preferences across shopping journeys"
+    },
+    {
+      id: 7,
+      category: "Commerce Use Cases",
+      api: "Single-merchant checkout, inventory lookup, payment processing",
+      mcp: "AI shopping assistants, personalized recommendations, price monitoring",
+      ucp: "Multi-merchant unified checkout, cross-platform order management, global commerce",
+      agenticImpact: "UCP enables agents to shop across multiple stores in a single transaction"
+    },
+    {
+      id: 8,
+      category: "Agent Decision Making",
+      api: "Rules-based - Agent follows predefined logic flows",
+      mcp: "Context-aware - Agent uses LLM reasoning with real-time data",
+      ucp: "Orchestration-capable - Agent can negotiate best deals across merchants",
+      agenticImpact: "MCP+UCP combination allows agents to reason about best purchase options intelligently"
+    },
+    {
+      id: 9,
+      category: "Integration Complexity",
+      api: "Medium - Each API has unique patterns and authentication",
+      mcp: "Low - Standardized protocol reduces integration effort",
+      ucp: "Low-Medium - Once integrated, works across all UCP merchants",
+      agenticImpact: "Standardization lets agents scale to thousands of merchants without custom code"
+    },
+    {
+      id: 10,
+      category: "Real-Time Capabilities",
+      api: "Limited - Polling or webhooks for updates",
+      mcp: "High - Streaming responses and bidirectional updates",
+      ucp: "High - Real-time inventory, pricing, and order status",
+      agenticImpact: "Real-time data prevents agents from ordering out-of-stock items or stale prices"
+    },
+    {
+      id: 11,
+      category: "Authentication Model",
+      api: "API keys, OAuth 2.0, JWT tokens per service",
+      mcp: "Delegated authentication with user consent",
+      ucp: "Universal identity with merchant-agnostic credentials",
+      agenticImpact: "Single sign-on enables agents to act on user's behalf across all merchants"
+    },
+    {
+      id: 12,
+      category: "Data Ownership",
+      api: "Provider-controlled with API rate limits",
+      mcp: "User-controlled with explicit consent for data access",
+      ucp: "Distributed with user as primary owner",
+      agenticImpact: "User control ensures agents only access data with explicit permission"
+    },
+    {
+      id: 13,
+      category: "Transaction Atomicity",
+      api: "Single endpoint per transaction",
+      mcp: "Not transaction-focused (read operations primarily)",
+      ucp: "Multi-step ACID-compliant transaction support",
+      agenticImpact: "UCP ensures agents can complete complex multi-merchant purchases without partial failures"
+    },
+    {
+      id: 14,
+      category: "Error Handling",
+      api: "HTTP status codes, custom error messages",
+      mcp: "Contextual error responses with recovery suggestions",
+      ucp: "Standardized error codes with automatic retry logic",
+      agenticImpact: "Intelligent error handling lets agents recover from failures without user intervention"
+    },
+    {
+      id: 15,
+      category: "Pricing Model",
+      api: "Per API call or tiered subscription",
+      mcp: "Often bundled with AI model usage",
+      ucp: "Transaction fee (typically 1-3%) + platform fee",
+      agenticImpact: "Transaction-based pricing aligns cost with value delivered by agent"
+    },
+    {
+      id: 16,
+      category: "Agent Learning Capability",
+      api: "No learning - Static integration",
+      mcp: "High - Agents learn user preferences through context",
+      ucp: "Medium - Agents learn from purchase history and behaviors",
+      agenticImpact: "Learning capability enables personalized shopping experiences that improve over time"
+    },
+    {
+      id: 17,
+      category: "Multi-Merchant Coordination",
+      api: "Manual - Developer must orchestrate multiple APIs",
+      mcp: "Agent-driven - AI can coordinate multiple data sources",
+      ucp: "Native - Built-in multi-merchant transaction support",
+      agenticImpact: "Native support eliminates need for complex agent logic to manage split payments"
+    },
+    {
+      id: 18,
+      category: "Negotiation Capability",
+      api: "None - Fixed prices and terms",
+      mcp: "Limited - Can present options but not negotiate",
+      ucp: "Emerging - Framework supports dynamic pricing and agent negotiations",
+      agenticImpact: "Negotiation enables agents to secure better deals on behalf of users"
+    },
+    {
+      id: 19,
+      category: "Compliance & Regulation",
+      api: "Per-region implementation required",
+      mcp: "Data privacy focused (GDPR, CCPA compliance)",
+      ucp: "Built-in compliance for global commerce (customs, tax, sanctions)",
+      agenticImpact: "Automatic compliance lets agents shop globally without legal risks"
+    },
+    {
+      id: 20,
+      category: "Ideal for Agentic Commerce When...",
+      api: "Building custom integrations with specific merchants",
+      mcp: "Enabling AI assistants to access real-time product data and user preferences",
+      ucp: "Orchestrating autonomous multi-merchant shopping experiences",
+      agenticImpact: "Combining all three creates the most powerful agentic commerce platform"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl p-8 mb-8">
+          <div className="flex items-center gap-4 mb-4">
+            <Bot className="w-16 h-16 text-white" />
+            <div>
+              <h1 className="text-4xl font-bold text-white">Agentic Commerce Protocol Comparison</h1>
+              <p className="text-blue-100 text-lg mt-2">API vs MCP vs UCP: Building the Future of Autonomous Shopping</p>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-blue-400">
+            <p className="text-blue-50 text-sm">Analysis by: <span className="font-semibold text-white">Mohan Manoharan</span></p>
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-blue-600 p-4 rounded-lg shadow-lg">
+            <div className="flex items-center gap-3 mb-2">
+              <Network className="w-8 h-8 text-white" />
+              <h3 className="font-bold text-white text-lg">API</h3>
+            </div>
+            <p className="text-blue-100 text-sm">Traditional integration layer</p>
+          </div>
+          <div className="bg-purple-600 p-4 rounded-lg shadow-lg">
+            <div className="flex items-center gap-3 mb-2">
+              <Bot className="w-8 h-8 text-white" />
+              <h3 className="font-bold text-white text-lg">MCP</h3>
+            </div>
+            <p className="text-purple-100 text-sm">AI-native context protocol</p>
+          </div>
+          <div className="bg-green-600 p-4 rounded-lg shadow-lg">
+            <div className="flex items-center gap-3 mb-2">
+              <ShoppingCart className="w-8 h-8 text-white" />
+              <h3 className="font-bold text-white text-lg">UCP</h3>
+            </div>
+            <p className="text-green-100 text-sm">Universal commerce standard</p>
+          </div>
+        </div>
+
+        {/* Comparison Table */}
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+                <tr>
+                  <th className="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider w-1/6">Category</th>
+                  <th className="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider w-1/5 bg-blue-700">API</th>
+                  <th className="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider w-1/5 bg-purple-700">MCP</th>
+                  <th className="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider w-1/5 bg-green-700">UCP</th>
+                  <th className="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider w-1/5 bg-orange-600">Agentic Impact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonData.map((row, index) => (
+                  <React.Fragment key={row.id}>
+                    <tr 
+                      className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50 transition-colors cursor-pointer`}
+                      onClick={() => toggleRow(row.id)}
+                    >
+                      <td className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold text-gray-900">{row.category}</span>
+                          {expandedRows[row.id] ? 
+                            <ChevronUp className="w-5 h-5 text-gray-500" /> : 
+                            <ChevronDown className="w-5 h-5 text-gray-500" />
+                          }
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 border-b border-gray-200 bg-blue-50">
+                        <div className={`text-sm text-gray-700 ${expandedRows[row.id] ? '' : 'line-clamp-2'}`}>
+                          {row.api}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 border-b border-gray-200 bg-purple-50">
+                        <div className={`text-sm text-gray-700 ${expandedRows[row.id] ? '' : 'line-clamp-2'}`}>
+                          {row.mcp}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 border-b border-gray-200 bg-green-50">
+                        <div className={`text-sm text-gray-700 ${expandedRows[row.id] ? '' : 'line-clamp-2'}`}>
+                          {row.ucp}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 border-b border-gray-200 bg-orange-50">
+                        <div className={`text-sm text-gray-700 ${expandedRows[row.id] ? '' : 'line-clamp-2'}`}>
+                          {row.agenticImpact}
+                        </div>
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Key Insights */}
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
+          <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl shadow-lg text-white">
+            <h3 className="font-bold text-xl mb-4">🎯 Key Insight #1</h3>
+            <p className="text-blue-100">
+              <strong>APIs</strong> are the foundation, but they require agents to have extensive pre-programmed logic for each merchant. This doesn't scale for autonomous commerce.
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-6 rounded-xl shadow-lg text-white">
+            <h3 className="font-bold text-xl mb-4">🤖 Key Insight #2</h3>
+            <p className="text-purple-100">
+              <strong>MCP</strong> enables agents to reason about shopping decisions using AI, accessing real-time data contextually without hard-coded integrations.
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-lg text-white">
+            <h3 className="font-bold text-xl mb-4">🛒 Key Insight #3</h3>
+            <p className="text-green-100">
+              <strong>UCP</strong> provides the standardized commerce layer that allows agents to execute complex multi-merchant transactions autonomously.
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-orange-600 to-red-600 p-6 rounded-xl shadow-lg text-white">
+            <h3 className="font-bold text-xl mb-4">⚡ The Winning Combination</h3>
+            <p className="text-orange-100">
+              <strong>MCP + UCP</strong> together create the ideal agentic commerce stack: MCP for intelligent reasoning and data access, UCP for standardized transaction execution.
+            </p>
+          </div>
+        </div>
+
+        {/* Architecture Diagram */}
+        <div className="bg-white rounded-xl shadow-2xl p-8 mt-8">
+          <h3 className="font-bold text-2xl mb-6 text-gray-900">Agentic Commerce Architecture Stack</h3>
+          <div className="space-y-4">
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 rounded-lg text-white">
+              <h4 className="font-bold text-lg mb-2">🤖 Agent Layer (AI/LLM)</h4>
+              <p className="text-sm">Decision-making, reasoning, user intent understanding</p>
+            </div>
+            <div className="bg-gradient-to-r from-purple-500 to-purple-700 p-6 rounded-lg text-white">
+              <h4 className="font-bold text-lg mb-2">📡 MCP (Context Protocol)</h4>
+              <p className="text-sm">Real-time data access, tool discovery, contextual awareness</p>
+            </div>
+            <div className="bg-gradient-to-r from-green-500 to-green-700 p-6 rounded-lg text-white">
+              <h4 className="font-bold text-lg mb-2">🌐 UCP (Commerce Protocol)</h4>
+              <p className="text-sm">Transaction execution, multi-merchant orchestration, payment processing</p>
+            </div>
+            <div className="bg-gradient-to-r from-blue-500 to-blue-700 p-6 rounded-lg text-white">
+              <h4 className="font-bold text-lg mb-2">🔌 APIs (Integration Layer)</h4>
+              <p className="text-sm">Merchant-specific endpoints, legacy system integration</p>
+            </div>
+            <div className="bg-gradient-to-r from-gray-600 to-gray-800 p-6 rounded-lg text-white">
+              <h4 className="font-bold text-lg mb-2">🏪 Merchant Systems</h4>
+              <p className="text-sm">Inventory, pricing, fulfillment, customer data</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CommerceComparison;

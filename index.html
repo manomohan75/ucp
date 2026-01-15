@@ -92,6 +92,7 @@
       const [activeTab, setActiveTab] = useState('overview');
 
       const tabs = [
+        { id: 'quickstart', label: 'Quick Start', icon: ArrowRight },
         { id: 'overview', label: 'Overview', icon: Network },
         { id: 'architecture', label: 'Architecture', icon: Network },
         { id: 'merchant', label: 'Merchant Setup', icon: Store },
@@ -143,6 +144,7 @@
 
               {/* Content */}
               <div className="p-8">
+                {activeTab === 'quickstart' && <QuickStartContent />}
                 {activeTab === 'overview' && <OverviewContent />}
                 {activeTab === 'architecture' && <ArchitectureContent />}
                 {activeTab === 'merchant' && <MerchantContent />}
@@ -208,6 +210,116 @@
               <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
               <span className="text-gray-700"><strong>Unified Checkout:</strong> Consistent payment experience everywhere</span>
             </li>
+          </ul>
+        </div>
+      </div>
+    );
+
+    const QuickStartContent = () => (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800">Quick Start</h2>
+
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
+          <h3 className="font-bold text-xl mb-3">Prerequisites</h3>
+          <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />UCP account with sandbox + production API keys</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />HTTPS endpoint for webhooks</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />Ability to serve a UCP-formatted product feed (JSON/XML)</li>
+          </ul>
+        </div>
+
+        <div className="bg-indigo-50 p-6 rounded-lg">
+          <h3 className="font-bold text-xl mb-3">Environment Basics</h3>
+          <div className="grid md:grid-cols-2 gap-4 text-gray-800">
+            <div className="bg-white border rounded-lg p-4">
+              <h4 className="font-semibold text-blue-700 mb-1">Sandbox</h4>
+              <p className="text-sm text-gray-700">Base URL: <span className="font-mono">https://sandbox.api.ucp.example.com</span></p>
+              <p className="text-sm text-gray-700">Use for test cards, webhook replay, and integration validation.</p>
+            </div>
+            <div className="bg-white border rounded-lg p-4">
+              <h4 className="font-semibold text-green-700 mb-1">Production</h4>
+              <p className="text-sm text-gray-700">Base URL: <span className="font-mono">https://api.ucp.example.com</span></p>
+              <p className="text-sm text-gray-700">Rotate keys, enforce HTTPS, and enable 3D Secure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white border-2 border-gray-200 rounded-lg p-6 space-y-4">
+          <h3 className="font-bold text-xl mb-2">5-Step Flow</h3>
+          <div className="space-y-3 text-gray-800">
+            <div className="flex items-start gap-3">
+              <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+              <div>
+                <h4 className="font-semibold">Authenticate</h4>
+                <p className="text-sm text-gray-700">Use OAuth 2.0 client credentials to obtain a bearer token.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+              <div>
+                <h4 className="font-semibold">Publish Catalog</h4>
+                <p className="text-sm text-gray-700">Host your catalog in the UCP JSON schema and register the feed URL.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+              <div>
+                <h4 className="font-semibold">Create Order</h4>
+                <p className="text-sm text-gray-700">Build a multi-merchant order payload including items, customer, and shipping.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
+              <div>
+                <h4 className="font-semibold">Process Payment</h4>
+                <p className="text-sm text-gray-700">Tokenize payment data, then call payments API with 3D Secure enabled when required.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">5</div>
+              <div>
+                <h4 className="font-semibold">Handle Webhooks</h4>
+                <p className="text-sm text-gray-700">Acknowledge events for order status, payment success/failure, and fulfillment updates.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 text-white p-6 rounded-lg">
+          <h3 className="font-bold text-lg mb-3">Minimal Code Path</h3>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto text-sm">
+{`// Authenticate
+const token = await ucp.auth.getToken({
+  client_id: process.env.UCP_CLIENT_ID,
+  client_secret: process.env.UCP_CLIENT_SECRET
+});
+
+// Create order
+const order = await ucp.orders.create({
+  customer: { id: 'cust_123', email: 'customer@example.com' },
+  items: [
+    { merchant_id: 'store_a', product_id: 'prod_shirt_001', quantity: 1, price: 45 },
+    { merchant_id: 'store_b', product_id: 'prod_jeans_042', quantity: 1, price: 78 }
+  ],
+  shipping: { country: 'US', city: 'New York', method: 'standard' }
+}, { token });
+
+// Process payment
+await ucp.payments.process({
+  order_id: order.id,
+  amount: 123,
+  currency: 'USD',
+  payment_method: { type: 'card', token: 'tok_test_card' }
+}, { token });`}
+          </pre>
+        </div>
+
+        <div className="bg-green-50 p-6 rounded-lg">
+          <h4 className="font-bold text-lg mb-3">Validation Tips</h4>
+          <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />Use sandbox test cards and replay webhooks until your handler returns 200 within 5s.</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />Log the UCP event ID for idempotent retries.</li>
+            <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />Verify catalog ingestion by comparing SKU counts and prices against the UCP dashboard.</li>
           </ul>
         </div>
       </div>
@@ -466,6 +578,43 @@ Content-Type: application/json
   }
 }`}
           </pre>
+        </div>
+
+        <div className="bg-red-50 p-6 rounded-lg border-2 border-red-200">
+          <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
+            <Shield className="w-6 h-6 text-red-600" />
+            Security Best Practices
+          </h4>
+          <div className="grid md:grid-cols-2 gap-4">
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Never store raw card details</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Use tokenization for all payments</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Enable 3D Secure for high-risk transactions</span>
+              </li>
+            </ul>
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Implement rate limiting on payment APIs</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Monitor for suspicious activity patterns</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold">•</span>
+                <span>Log all payment events for audit trails</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="bg-gray-800 text-white p-6 rounded-lg">
